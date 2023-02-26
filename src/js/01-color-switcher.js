@@ -6,17 +6,17 @@ const bodyEl = document.body;
 const btnStartEl = document.querySelector('[data-start]');
 const btnStopEl = document.querySelector('[data-stop]');
 
-btnStartEl.addEventListener('click', onBtnStartClick);
-btnStopEl.addEventListener('click', onBtnStopClick);
+btnStartEl.addEventListener('click', onBClicktnStart);
+btnStopEl.addEventListener('click', onClickBtnStop);
 
-function onBtnStartClick() {
+function onBClicktnStart() {
   timerId = setInterval(() => {
     bodyEl.style.backgroundColor = getRandomHexColor();
   }, 1000);
   btnStartEl.disabled = true;
   btnStopEl.disabled = false;
 }
-function onBtnStopClick() {
+function onClickBtnStop() {
   clearTimeout(timerId);
   btnStartEl.disabled = false;
   btnStopEl.disabled = true;
