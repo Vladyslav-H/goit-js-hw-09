@@ -4,7 +4,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 const inputEl = document.querySelector('#datetime-picker');
 const buttonEl = document.querySelector('button');
 const LOCALSTORAGE_KEY = 'input-date-value';
-
+const currentDate = Date.now();
 const daysValueEl = document.querySelector('[data-days]');
 const hoursValueEl = document.querySelector('[data-hours]');
 const minutesValueEl = document.querySelector('[data-minutes]');
@@ -20,7 +20,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
-    if (this.defaultDate > selectedDates[0].getTime()) {
+    if (currentDate > selectedDates[0].getTime()) {
       return window.alert('Please choose a date in the future');
     }
     localStorage.setItem(LOCALSTORAGE_KEY, selectedDates[0].getTime());
@@ -30,7 +30,8 @@ const options = {
 
 flatpickr(inputEl, options);
 
-function onButtonClick() {
+function onButtonClick(event) {
+  event.preventDefault();
   buttonEl.disabled = true;
   inputEl.disabled = true;
   const startTime = +localStorage.getItem(LOCALSTORAGE_KEY);
