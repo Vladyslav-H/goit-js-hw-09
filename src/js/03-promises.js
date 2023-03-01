@@ -3,25 +3,25 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const formEl = document.querySelector('form');
 
-formEl.addEventListener('input', throttle(onInput, 500));
+formEl.addEventListener('input', throttle(onInput, 1000));
 formEl.addEventListener('submit', onSubmit);
-
+let inputData = {};
+console.log(inputData);
 function onInput() {
-  const input = {
+  inputData = {
     delay: formEl.delay.value,
     step: formEl.step.value,
     amount: formEl.amount.value,
   };
-  if (input.delay < 0 || input.step < 0 || input.amount < 0) {
+  if (inputData.delay < 0 || inputData.step < 0 || inputData.amount < 0) {
     Notify.warning(`Please, input valid value`);
-  }
-  localStorage.setItem('key', JSON.stringify(input));
+  }console.log(inputData);
 }
 
 function onSubmit(event) {
   event.preventDefault();
   event.currentTarget.reset();
-  const { delay, step, amount } = JSON.parse(localStorage.getItem('key'));
+  const { delay, step, amount } = inputData;
   let totalDelay = +delay;
   for (let i = 1; i <= +amount; i++) {
     createPromise(i, totalDelay).then(fullfill).catch(error);
