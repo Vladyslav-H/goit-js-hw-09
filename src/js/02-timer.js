@@ -4,12 +4,12 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const inputEl = document.querySelector('#datetime-picker');
 const buttonEl = document.querySelector('button');
-const LOCALSTORAGE_KEY = 'input-date-value';
-const currentDate = Date.now();
 const daysValueEl = document.querySelector('[data-days]');
 const hoursValueEl = document.querySelector('[data-hours]');
 const minutesValueEl = document.querySelector('[data-minutes]');
 const secondsValueEl = document.querySelector('[data-seconds]');
+const LOCALSTORAGE_KEY = 'input-date-value';
+const currentDate = Date.now();
 
 buttonEl.addEventListener('click', onButtonClick);
 buttonEl.disabled = true;
@@ -36,7 +36,8 @@ function onButtonClick(event) {
   buttonEl.disabled = true;
   inputEl.disabled = true;
   const startTime = +localStorage.getItem(LOCALSTORAGE_KEY);
-  const timerId = setInterval(() => {
+  
+    const timerId = setInterval(() => {
     localStorage.removeItem(LOCALSTORAGE_KEY);
     const currentTime = Date.now();
     const timerTime = startTime - currentTime;
@@ -48,7 +49,7 @@ function onButtonClick(event) {
     secondsValueEl.textContent = seconds;
 
     setTimeout(() => {
-      clearInterval(timerId), (inputEl.disabled = false);
+      clearInterval(timerId);
     }, timerTime);
   }, 1000);
 }
