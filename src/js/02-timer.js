@@ -41,10 +41,10 @@ function onButtonClick(event) {
   const timerId = setInterval(() => {
     updateTimerTime(startTime);
     if (
-      +daysValueEl.textContent === 0 &&
-      +hoursValueEl.textContent === 0 &&
-      +minutesValueEl.textContent === 0 &&
-      +secondsValueEl.textContent === 0
+      !+daysValueEl.textContent  &&
+      !+hoursValueEl.textContent  &&
+      !+minutesValueEl.textContent  &&
+      !+secondsValueEl.textContent 
     ) {
       clearInterval(timerId);
     }
@@ -74,7 +74,6 @@ function convertMs(ms) {
   );
   return { days, hours, minutes, seconds };
 }
-
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
