@@ -22,7 +22,7 @@ const options = {
   onClose(selectedDates) {
     console.log(selectedDates[0]);
     if (currentDate > selectedDates[0].getTime()) {
-     return   Notify.failure('Please choose a date in the future');
+      return Notify.failure('Please choose a date in the future');
     }
     localStorage.setItem(LOCALSTORAGE_KEY, selectedDates[0].getTime());
     buttonEl.disabled = false;
@@ -33,27 +33,33 @@ flatpickr(inputEl, options);
 
 function onButtonClick(event) {
   event.preventDefault();
+  const startTime = +localStorage.getItem(LOCALSTORAGE_KEY);
+  localStorage.removeItem(LOCALSTORAGE_KEY);
   buttonEl.disabled = true;
   inputEl.disabled = true;
-  const startTime = +localStorage.getItem(LOCALSTORAGE_KEY);
-  
-    const timerId = setInterval(() => {
-    localStorage.removeItem(LOCALSTORAGE_KEY);
-    const currentTime = Date.now();
-    const timerTime = startTime - currentTime;
-    const { days, hours, minutes, seconds } = convertMs(timerTime);
 
-    daysValueEl.textContent = days;
-    hoursValueEl.textContent = hours;
-    minutesValueEl.textContent = minutes;
-    secondsValueEl.textContent = seconds;
-
-    setTimeout(() => {
+  const timerId = setInterval(() => {
+    updateTimerTime(startTime);
+    if (
+      +daysValueEl.textContent === 0 &&
+      +hoursValueEl.textContent === 0 &&
+      +minutesValueEl.textContent === 0 &&
+      +secondsValueEl.textContent === 0
+    ) {
       clearInterval(timerId);
-    }, timerTime);
+    }
   }, 1000);
 }
+function updateTimerTime(time) {
+  const currentTime = Date.now();
+  const timerTime = time - currentTime;
+  const { days, hours, minutes, seconds } = convertMs(timerTime);
 
+  daysValueEl.textContent = days;
+  hoursValueEl.textContent = hours;
+  minutesValueEl.textContent = minutes;
+  secondsValueEl.textContent = seconds;
+}
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
